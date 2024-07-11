@@ -23,6 +23,7 @@ include { FILTER_SEQUENCES                                       } from '../modu
 include { GET_NONSYNONYMOUS                                      } from '../modules/local/get_nonsynonymous'
 include { GET_KEY_SITES                                          } from '../modules/local/get_key_sites'
 include { CONSTRUCT_HAPLOTYPES                                   } from '../modules/local/construct_haplotype_sequences'
+include { CONSTRUCT_DIVERGENT_PATHWAYS                           } from '../modules/local/construct_divergent_pathways'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,5 +71,11 @@ workflow SUB_SAMPLE {
         FILTER_SEQUENCES.out.strains_txt,
         NEXCLADE_RUN.out.nextclade_tsv,
         GET_KEY_SITES.out.key_sites_txt
+    )
+
+    // MODULE: construct divergent pathways
+    CONSTRUCT_DIVERGENT_PATHWAYS (
+        CONSTRUCT_HAPLOTYPES.out.haplotype_sequences_txt,
+        ch_input_metadata_tsv
     )
 }
