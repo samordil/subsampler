@@ -1,5 +1,5 @@
-process GET_INFOS {
-    tag "get infos"
+process GET_ARG_VALUES {
+    tag "get arg values"
     label 'process_medium'
     
    // conda "${moduleDir}/environment.yml"
@@ -8,19 +8,17 @@ process GET_INFOS {
    //     'biocontainers/mulled-v2-36d7254367b6ad6a1b47fbbca41b9e60238df0ac:e01e41d46acce1c1c39cbaa37fbd8a7453695ff3-0' }"
 
     input:
-    path divergent_pathways_csv
-    path metadata_tsv
-    path nextclade_tsv
+    path infos_tsv
+    path reference_dir
 
     output:
-    path "infos.tsv"            , emit: infos_tsv
+    path "args"            , emit: arg_dir
 
     script:
     """
-   get_infos.py \
-        --divergent-pathways $divergent_pathways_csv \
-        --metadata  $metadata_tsv \
-        --nextclade-tsv $nextclade_tsv \
-        --output infos.tsv
+    get_arg_values.py \
+        --infos $infos_tsv \
+        --reference-dir $reference_dir \
+        --output args
     """
 }

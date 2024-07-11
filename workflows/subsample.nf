@@ -7,6 +7,9 @@ if (params.input_fasta)         { ch_input_fasta        = file(params.input_fast
 if (params.input_metadata_tsv)  { ch_input_metadata_tsv = file(params.input_metadata_tsv) } else { ch_input_metadata_tsv = []   }
 if (params.genome_csv)          { ch_genome_csv         = file(params.genome_csv)         } else { ch_ch_genome_csv = []        }
 
+// Read directory
+ref_dir       = file("${params.reference_dir}", type: 'dir' , maxdepth: 1)
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -25,7 +28,7 @@ include { GET_KEY_SITES                                          } from '../modu
 include { CONSTRUCT_HAPLOTYPES                                   } from '../modules/local/construct_haplotype_sequences'
 include { CONSTRUCT_DIVERGENT_PATHWAYS                           } from '../modules/local/construct_divergent_pathways'
 include { GET_INFOS                                              } from '../modules/local/get_infos'
-
+include { GET_ARG_VALUES                                         } from '../modules/local/get_arg_values'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -85,5 +88,11 @@ workflow SUB_SAMPLE {
         CONSTRUCT_DIVERGENT_PATHWAYS.out.divergent_pathways_csv,
         ch_input_metadata_tsv,
         NEXCLADE_RUN.out.nextclade_tsv
+    )
+
+    // MODULE: get get argument values
+    GET_ARG_VALUES (
+        GET_INFOS.out.infos_tsv,
+        ref_dir
     )
 }
