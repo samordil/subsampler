@@ -21,7 +21,7 @@ def main():
     # --- filter meta ---
     meta = pd.read_csv(args.metadata, delimiter='\t')
 
-    meta_cols = ['strain', 'date', 'region_exposure', 'country_exposure', 'division_exposure', 'pango_lineage']
+    meta_cols = ['strain', 'date', 'region_exposure', 'country_exposure', 'division_exposure', 'pangolin_lineage']
     if args.include_genbank_accession:
         meta_cols.append('genbank_accession')
         meta = meta[meta['host'] == 'Homo sapiens']
