@@ -21,6 +21,7 @@ include { NEXCLADE_DATASET                                       } from '../modu
 include { NEXCLADE_RUN                                           } from '../modules/local/run_nextclade'
 include { FILTER_SEQUENCES                                       } from '../modules/local/filter_sequences'
 include { GET_NONSYNONYMOUS                                      } from '../modules/local/get_nonsynonymous'
+include { GET_KEY_SITES                                          } from '../modules/local/get_key_sites'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,7 +50,7 @@ workflow SUB_SAMPLE {
         NEXCLADE_RUN.out.nextclade_tsv
     )
 
-    // MODULE: Filter sequences
+    // MODULE: get nonsynonymous mutations
     GET_NONSYNONYMOUS (
         ch_genome_csv,
         FILTER_SEQUENCES.out.strains_txt,
@@ -57,5 +58,12 @@ workflow SUB_SAMPLE {
         ch_input_metadata_tsv
         
     )
-    
+
+    // MODULE: get key sitesß
+    GET_KEY_SITES (
+        FILTER_SEQUENCES.out.strains_txt,
+        GET_NONSYNONYMOUS.out.nonsynonymous_txt,
+        ch_input_metadata_tsv
+        
+    )
 }
