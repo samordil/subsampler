@@ -24,6 +24,7 @@ include { GET_NONSYNONYMOUS                                      } from '../modu
 include { GET_KEY_SITES                                          } from '../modules/local/get_key_sites'
 include { CONSTRUCT_HAPLOTYPES                                   } from '../modules/local/construct_haplotype_sequences'
 include { CONSTRUCT_DIVERGENT_PATHWAYS                           } from '../modules/local/construct_divergent_pathways'
+include { GET_INFOS                                              } from '../modules/local/get_infos'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,5 +78,12 @@ workflow SUB_SAMPLE {
     CONSTRUCT_DIVERGENT_PATHWAYS (
         CONSTRUCT_HAPLOTYPES.out.haplotype_sequences_txt,
         ch_input_metadata_tsv
+    )
+
+    // MODULE: get information
+    GET_INFOS (
+        CONSTRUCT_DIVERGENT_PATHWAYS.out.divergent_pathways_csv,
+        ch_input_metadata_tsv,
+        NEXCLADE_RUN.out.nextclade_tsv
     )
 }

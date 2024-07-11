@@ -36,7 +36,7 @@ def main():
             seqs_filtered.extend(pathways[p])
 
     # get meta
-    meta_cols = ['strain', 'date', 'region_exposure', 'country_exposure', 'division_exposure', 'pango_lineage']
+    meta_cols = ['strain', 'date', 'region_exposure', 'country_exposure', 'division_exposure', 'pangolin_lineage']
     if args.include_genbank_accession:
         meta_cols.append('genbank_accession')
     meta = pd.read_csv(args.metadata, delimiter='\t', usecols=meta_cols, index_col='strain')
@@ -59,7 +59,7 @@ def main():
         infos[i]['country'] = meta_dict['country_exposure'][i]
         infos[i]['division'] = meta_dict['division_exposure'][i]
         infos[i]['date'] = meta_dict['date'][i]
-        infos[i]['pangoLineage'] = meta_dict['pango_lineage'][i]
+        infos[i]['pangoLineage'] = meta_dict['pangolin_lineage'][i]
         infos[i]['nextstrainClade'] = nextclade_dict['clade'][i]
         infos[i]['whoClade'] = nextclade_dict['clade_who'][i]
         infos[i]['substitutions'] = nextclade_dict['substitutions'][i]
