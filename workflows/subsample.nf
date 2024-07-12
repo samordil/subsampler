@@ -29,6 +29,8 @@ include { CONSTRUCT_HAPLOTYPES                                   } from '../modu
 include { CONSTRUCT_DIVERGENT_PATHWAYS                           } from '../modules/local/construct_divergent_pathways'
 include { GET_INFOS                                              } from '../modules/local/get_infos'
 include { GET_ARG_VALUES                                         } from '../modules/local/get_arg_values'
+include { SUBSAMPLING                                            } from '../modules/local/subsampling'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -94,5 +96,19 @@ workflow SUB_SAMPLE {
     GET_ARG_VALUES (
         GET_INFOS.out.infos_tsv,
         ref_dir
+    )
+    // MODULE: subsampling
+    SUBSAMPLING (
+        GET_INFOS.out.infos_tsv,
+        CONSTRUCT_HAPLOTYPES.out.haplotype_sequences_txt,
+        CONSTRUCT_DIVERGENT_PATHWAYS.out.divergent_pathways_csv,
+        params.description,
+        params.location,
+        params.date_start,
+        params.date_end,
+        params.sample_size,
+        params.characteristic,
+        params.seed,
+        params.temporally_even
     )
 }

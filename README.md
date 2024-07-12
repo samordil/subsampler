@@ -1,2 +1,2 @@
 ## subsampler 
-**subsampler** is a nextflow implementation of [covSampler](https://academic.oup.com/ve/article/8/2/veac071/6656080?searchresult=1&login=f)
+**subsampler** is a nextflow implementation of [covSampler](https://github.com/wuaipinglab/covSampler) developed by [Yexiao Cheng et al. Virus Evolution](https://academic.oup.com/ve/article/8/2/veac071/6656080?searchresult=1&login=f)
