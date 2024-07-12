@@ -1,6 +1,6 @@
 process NEXCLADE_RUN {
     tag "run nextclade"
-    label 'process_high'
+    label 'process_high_cpu'
 
    // conda "${moduleDir}/environment.yml"
    //  container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
