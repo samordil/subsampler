@@ -30,6 +30,7 @@ include { CONSTRUCT_DIVERGENT_PATHWAYS                           } from '../modu
 include { GET_INFOS                                              } from '../modules/local/get_infos'
 include { GET_ARG_VALUES                                         } from '../modules/local/get_arg_values'
 include { SUBSAMPLING                                            } from '../modules/local/subsampling'
+include { FILTER_META_N_FASTA                                    } from '../modules/local/filter_metadata_and_fasta'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,5 +111,13 @@ workflow SUB_SAMPLE {
         params.characteristic,
         params.seed,
         params.temporally_even
+    )
+    // MODULE: Filter and return the metadata and tsv files
+    FILTER_META_N_FASTA (
+        SUBSAMPLING.out.subsampled_strain_id_txt,
+        ch_input_fasta,
+        ch_input_metadata_tsv,
+        params.seed,
+        params.sample_size
     )
 }
